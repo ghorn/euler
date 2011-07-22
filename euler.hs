@@ -67,6 +67,12 @@ e7 = head $ nPrimes 10001
       where
         isPrime x = and $ map (\a -> mod x a /= 0) sieved
 
+
+-- only pythagorean triplet with perimiter == 1000
+e9 :: Int
+e9 = head [ a*b*c | a <- [1..1000], b <- [1..a], c <- [1000 - a - b], a*a + b*b == c*c]
+
+
 -- sum of primes under 2,000,000
 e10 = sum $ primesUnder 2000000
 primesUnder :: Int -> [Int]
@@ -89,4 +95,6 @@ main = do
   print ("e5", e5 == 232792560)
   print ("e6", e6 == 25164150)
   print ("e7", e7 == 104743)
+  
+  print ("e9", e9 == 31875000)  
   print ("e10", e10 == 142913828922)
