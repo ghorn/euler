@@ -1,6 +1,11 @@
 -- euler.hs
 
-module Main where
+module Main (main) where
+
+import GHC.Exts (sortWith)
+import Data.Time.Clock (getCurrentTime,diffUTCTime)
+import System.IO (hFlush,stdout)
+import System (getArgs)
 
 e1 :: Integer
 e1 = sum $ filter (\x -> divisible x 5 || divisible x 3) [1..999]
@@ -49,8 +54,8 @@ e6 = (sqrSum 100) - (sumSqr 100)
     sqrSum n = (\x -> x*x) $ sum [1..n]
 
 -- the 10,001st prime number
-e7 :: Int
-e7 = head $ nPrimes 10001
+e7 :: Integer
+e7 = fromIntegral $ head $ nPrimes 10001
   where
     nPrimes :: Int -> [Int]
     nPrimes n = primeSieve n [] [2..]
@@ -80,13 +85,13 @@ e8 = maximum $ products5 $ digits num
 
 
 -- only pythagorean triplet with perimiter == 1000
-e9 :: Int
+e9 :: Integer
 e9 = head [ a*b*c | a <- [1..1000], b <- [1..a], c <- [1000 - a - b], a*a + b*b == c*c]
 
 
 -- sum of primes under 2,000,000
-e10 :: Int
-e10 = sum $ primesUnder 2000000
+e10 :: Integer
+e10 = fromIntegral $ sum $ primesUnder 2000000
 primesUnder :: Int -> [Int]
 primesUnder n = primeSieve [] [2..n-1]
   where
@@ -249,20 +254,46 @@ e67 fileText = head $foldr (\x acc -> zipWith (+) x (maxNeighbor' acc)) (last tr
 
 main :: IO ()
 main = do
-  print ("e1", e1 == 233168)
-  print ("e2", e2 == 4613732)
-  print ("e3", e3 == 6857)
-  print ("e4", e4 == 906609)
-  print ("e5", e5 == 232792560)
-  print ("e6", e6 == 25164150)
-  print ("e7", e7 == 104743)
-  print ("e8", e8 == 40824)
-  print ("e9", e9 == 31875000)  
-  print ("e10", e10 == 142913828922)
-
-  print ("e13", e13 == 5537376230)
-
-  print ("e18", e18 == 1074)
-
   triangle <- readFile "triangle.txt"
-  print ("e67", e67 triangle == 7273)
+
+  args <- getArgs
+
+  let fastSols = [("e01", e1, 233168),
+                  ("e02", e2, 4613732),
+                  ("e03", e3, 6857),
+                  ("e04", e4, 906609),
+                  ("e06", e6, 25164150),
+                  ("e08", e8, 40824),
+                  ("e09", e9, 31875000),
+                  ("e10", e10, 142913828922),
+                  ("e13", e13, 5537376230),
+                  ("e18", e18, 1074),
+                  ("e67", e67 triangle, 7273)]
+
+      slowSols = [("e05", e5, 232792560),
+                  ("e07", e7, 104743)]
+
+      allSols = sortWith (\(x,_,_) -> x) (fastSols ++ slowSols)
+
+      sols
+        | (elem "--fast" args) || (elem "-f" args) = fastSols
+        | (elem "--slow" args) || (elem "-s" args) = slowSols
+        | otherwise                                = allSols
+
+  let profile :: (Integral a) => (String, a, a) -> IO Bool
+      profile (name, fcn, trueAnswer) = do
+        putStr $ "evaluating " ++ name ++ "... "
+        hFlush stdout
+        start    <- getCurrentTime
+        putStr $ if (fcn == trueAnswer) then "correct! " else "fail >:( "
+        end      <- getCurrentTime
+        putStrLn $ "eval time: " ++ show (diffUTCTime end start)
+        return (fcn == trueAnswer)
+
+  start   <- getCurrentTime
+  results <- mapM profile sols
+  end     <- getCurrentTime
+  if elem False results
+    then putStrLn $ "\n" ++ (show (length (filter (== False) results))) ++ " incorrect answers"
+    else putStrLn "\nno errors"
+  putStrLn $ "total eval time: " ++ show (diffUTCTime end start)
