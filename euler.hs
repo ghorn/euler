@@ -44,6 +44,13 @@ e5 = head $ filter alldiv [1..]
     alldiv n = all (\x -> mod n x == 0) [20,19..2]
 
 
+-- difference between sum of squares and square of sum of [1..100]
+e6 :: Integer
+e6 = (sqrSum 100) - (sumSqr 100)
+  where
+    sumSqr n = sum $ map (\x -> x*x) [1..n]
+    sqrSum n = (\x -> x*x) $ sum [1..n]
+
 -- the 10,001st prime number
 e7 :: Int
 e7 = head $ nPrimes 10001
@@ -66,5 +73,5 @@ main = do
   print ("e3", e3 == 6857)
   print ("e4", e4 == 906609)
   print ("e5", e5 == 232792560)
-  
+  print ("e6", e6 == 25164150)
   print ("e7", e7 == 104743)
