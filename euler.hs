@@ -8,6 +8,7 @@ e1 = sum $ filter (\x -> divisible x 5 || divisible x 3) [1..999]
     divisible :: (Integral a) => a -> a -> Bool
     divisible a b = if mod a b == 0 then True else False
 
+
 e2 :: Integer
 e2 = sum $ filter even (fibsUnder 4000000)
   where
@@ -21,6 +22,7 @@ e2 = sum $ filter even (fibsUnder 4000000)
           | x + (head xs) > n    = (x:xs)
           | otherwise = f n ((x + (head xs)):(x:xs))
 
+
 e3 :: Integer
 e3 = head $ factorize 600851475143 []
   where
@@ -30,11 +32,30 @@ e3 = head $ factorize 600851475143 []
       where
         firstDivisor = head $ filter (\x -> mod n x == 0) [2..n]
 
+
 e4 :: Integer
 e4 = maximum [a*b | a <- [100..999], b <- [100..a], show (a*b) == reverse (show (a*b))]
 
+
+-- a faster analytic solution would be to multiply all the greatest power of the prime factorization
 e5 :: Integer
 e5 = head $ filter alldiv [1..]
   where
     alldiv n = all (\x -> mod n x == 0) [20,19..2]
--- a faster analytic solution would be to multiply all the greatest power of the prime factorization
+
+
+-- the 10,001st prime number
+e7 :: Int
+e7 = head $ nPrimes 10001
+  where
+    nPrimes :: Int -> [Int]
+    nPrimes n = primeSieve n [] [2..]
+    
+    primeSieve :: Int -> [Int] -> [Int] -> [Int]
+    primeSieve _ sieved [] = sieved
+    primeSieve n sieved (x:xs) 
+      | length sieved == n = sieved
+      | isPrime x   = primeSieve n (x:sieved) xs
+      | otherwise   = primeSieve n sieved xs
+      where
+        isPrime x = and $ map (\a -> mod x a /= 0) sieved
