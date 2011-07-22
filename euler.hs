@@ -101,7 +101,7 @@ primesUnder n = primeSieve [] [2..n-1]
           | otherwise = xs
 
 
--- greatest sum along binary tree (dynamic programming)
+-- greatest sum along small binary tree
 e18 :: Integer
 e18 = head $foldr (\x acc -> zipWith (+) x (maxNeighbor' acc)) (last tree) (init tree)
 --e18 = head $foldr (\x acc -> zipWith (+) x (maxNeighbor [] acc)) (last tree) (init tree)
@@ -130,6 +130,19 @@ e18 = head $foldr (\x acc -> zipWith (+) x (maxNeighbor' acc)) (last tree) (init
     maxNeighbor' xs = snd $ foldl (\(xPrev,acc) x -> (x, acc ++ [max x xPrev])) (head xs, []) (tail xs)
 
 
+-- greatest sum along large binary tree
+e67 :: String -> Integer
+e67 fileText = head $foldr (\x acc -> zipWith (+) x (maxNeighbor' acc)) (last tree) (init tree)
+  where
+    tree = fileToTree fileText
+
+    maxNeighbor' :: [Integer] -> [Integer]
+    maxNeighbor' xs = snd $ foldl (\(xPrev,acc) x -> (x, acc ++ [max x xPrev])) (head xs, []) (tail xs)
+
+    fileToTree :: String -> [[Integer]]
+    fileToTree x = map (map read) $ map words $ map init (lines x)
+
+
 main = do
   print ("e1", e1 == 233168)
   print ("e2", e2 == 4613732)
@@ -143,3 +156,6 @@ main = do
   print ("e10", e10 == 142913828922)
 
   print ("e18", e18 == 1074)
+
+  triangle <- readFile "triangle.txt"
+  print ("e67", e67 triangle == 7273)
