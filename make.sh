@@ -1,3 +1,3 @@
 #!/bin/sh
 
-ghc -O3 -o euler euler.hs -fforce-recomp
+ghc -Wall -O3 -o euler euler.hs -fforce-recomp

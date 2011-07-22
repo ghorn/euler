@@ -10,17 +10,14 @@ e1 = sum $ filter (\x -> divisible x 5 || divisible x 3) [1..999]
 
 
 e2 :: Integer
-e2 = sum $ filter even (fibsUnder 4000000)
+e2 = sum $ filter even (fibsUnder 4000000 [])
   where
-    fibsUnder :: Integer -> [Integer]
-    fibsUnder n = f n []
-      where
-        f :: Integer -> [Integer] -> [Integer]
-        f n []  = f n [1]
-        f n [x] = f n (2:[x])
-        f n (x:xs)
-          | x + (head xs) > n    = (x:xs)
-          | otherwise = f n ((x + (head xs)):(x:xs))
+    fibsUnder :: Integer -> [Integer] -> [Integer]
+    fibsUnder n []  = fibsUnder n [1]
+    fibsUnder n [x] = fibsUnder n (2:[x])
+    fibsUnder n (x:xs)
+      | x + (head xs) > n    = (x:xs)
+      | otherwise = fibsUnder n ((x + (head xs)):(x:xs))
 
 
 e3 :: Integer
@@ -65,7 +62,7 @@ e7 = head $ nPrimes 10001
       | isPrime x   = primeSieve n (x:sieved) xs
       | otherwise   = primeSieve n sieved xs
       where
-        isPrime x = and $ map (\a -> mod x a /= 0) sieved
+        isPrime x' = and $ map (\a -> mod x' a /= 0) sieved
 
 
 -- greatest product of 5 consecutive digits in a 1000-digit number
@@ -88,6 +85,7 @@ e9 = head [ a*b*c | a <- [1..1000], b <- [1..a], c <- [1000 - a - b], a*a + b*b 
 
 
 -- sum of primes under 2,000,000
+e10 :: Int
 e10 = sum $ primesUnder 2000000
 primesUnder :: Int -> [Int]
 primesUnder n = primeSieve [] [2..n-1]
@@ -229,12 +227,12 @@ e18 = head $foldr (\x acc -> zipWith (+) x (maxNeighbor' acc)) (last tree) (init
             [63,66,04,68,89,53,67,30,73,16,69,87,40,31],
             [04,62,98,27,23,09,70,98,73,93,38,53,60,04,23]]
 
-    maxNeighbor :: [Integer] -> [Integer] -> [Integer]
-    maxNeighbor acc [_] = acc
-    maxNeighbor acc (x0:x1:xs) = maxNeighbor (acc ++ [max x0 x1]) (x1:xs)
-
     maxNeighbor' :: [Integer] -> [Integer]
     maxNeighbor' xs = snd $ foldl (\(xPrev,acc) x -> (x, acc ++ [max x xPrev])) (head xs, []) (tail xs)
+
+--    maxNeighbor :: [Integer] -> [Integer] -> [Integer]
+--    maxNeighbor acc [_] = acc
+--    maxNeighbor acc (x0:x1:xs) = maxNeighbor (acc ++ [max x0 x1]) (x1:xs)
 
 
 -- greatest sum along large binary tree
@@ -249,7 +247,7 @@ e67 fileText = head $foldr (\x acc -> zipWith (+) x (maxNeighbor' acc)) (last tr
     fileToTree :: String -> [[Integer]]
     fileToTree x = map (map read) $ map words $ map init (lines x)
 
-
+main :: IO ()
 main = do
   print ("e1", e1 == 233168)
   print ("e2", e2 == 4613732)
