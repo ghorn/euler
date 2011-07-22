@@ -67,6 +67,20 @@ e7 = head $ nPrimes 10001
       where
         isPrime x = and $ map (\a -> mod x a /= 0) sieved
 
+-- sum of primes under 2,000,000
+e10 = sum $ primesUnder 2000000
+primesUnder :: Int -> [Int]
+primesUnder n = primeSieve [] [2..n-1]
+  where
+    primeSieve :: [Int] -> [Int] -> [Int]
+    primeSieve sieved [] = sieved
+    primeSieve sieved (x:xs) = primeSieve (x:sieved) unsieved
+      where
+        unsieved
+          | x*x < n   = filter (\a -> mod a x /= 0) xs
+          | otherwise = xs
+
+
 main = do
   print ("e1", e1 == 233168)
   print ("e2", e2 == 4613732)
@@ -75,3 +89,4 @@ main = do
   print ("e5", e5 == 232792560)
   print ("e6", e6 == 25164150)
   print ("e7", e7 == 104743)
+  print ("e10", e10 == 142913828922)
