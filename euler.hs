@@ -59,3 +59,12 @@ e7 = head $ nPrimes 10001
       | otherwise   = primeSieve n sieved xs
       where
         isPrime x = and $ map (\a -> mod x a /= 0) sieved
+
+main = do
+  print ("e1", e1 == 233168)
+  print ("e2", e2 == 4613732)
+  print ("e3", e3 == 6857)
+  print ("e4", e4 == 906609)
+  print ("e5", e5 == 232792560)
+  
+  print ("e7", e7 == 104743)
