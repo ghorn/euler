@@ -30,3 +30,11 @@ e3 = head $ factorize 600851475143 []
       where
         firstDivisor = head $ filter (\x -> mod n x == 0) [2..n]
 
+e4 :: Integer
+e4 = maximum [a*b | a <- [100..999], b <- [100..a], show (a*b) == reverse (show (a*b))]
+
+e5 :: Integer
+e5 = head $ filter alldiv [1..]
+  where
+    alldiv n = all (\x -> mod n x == 0) [20,19..2]
+-- a faster analytic solution would be to multiply all the greatest power of the prime factorization
