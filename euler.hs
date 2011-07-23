@@ -1,12 +1,65 @@
 -- euler.hs
 
-module Main (main) where
+module Main where
 
+import Data.List --(elemIndex)
+import Data.Maybe (isNothing, fromJust)
 import GHC.Exts (sortWith)
 import Data.Time.Clock (getCurrentTime,diffUTCTime)
 import System.IO (hFlush,stdout)
 import System (getArgs)
 
+
+-- the IO is here, the problems are all below
+main :: IO ()
+main = do
+
+  triangle <- readFile "triangle.txt"
+
+  args <- getArgs
+
+  let fastSols = [("e01", e1, 233168),
+                  ("e02", e2, 4613732),
+                  ("e03", e3, 6857),
+                  ("e04", e4, 906609),
+                  ("e06", e6, 25164150),
+                  ("e08", e8, 40824),
+                  ("e09", e9, 31875000),
+                  ("e10", e10, 142913828922),
+                  ("e13", e13, 5537376230),
+                  ("e18", e18, 1074),
+                  ("e67", e67 triangle, 7273)]
+
+      slowSols = [("e05", e5, 232792560),
+                  ("e07", e7, 104743)]
+
+      allSols = sortWith (\(x,_,_) -> x) (fastSols ++ slowSols)
+
+      sols
+        | (elem "--fast" args) || (elem "-f" args) = fastSols
+        | (elem "--slow" args) || (elem "-s" args) = slowSols
+        | otherwise                                = allSols
+
+  let profile :: (Integral a) => (String, a, a) -> IO Bool
+      profile (name, fcn, trueAnswer) = do
+        putStr $ "evaluating " ++ name ++ "... "
+        hFlush stdout
+        start    <- getCurrentTime
+        putStr $ if (fcn == trueAnswer) then "correct! " else "fail >:( "
+        end      <- getCurrentTime
+        putStrLn $ "eval time: " ++ show (diffUTCTime end start)
+        return (fcn == trueAnswer)
+
+  start   <- getCurrentTime
+  results <- mapM profile sols
+  end     <- getCurrentTime
+  if elem False results
+    then putStrLn $ "\n" ++ (show (length (filter (== False) results))) ++ " incorrect answers"
+    else putStrLn "\nno errors"
+  putStrLn $ "total eval time: " ++ show (diffUTCTime end start)
+
+
+-- all of the problems follow
 e1 :: Integer
 e1 = sum $ filter (\x -> divisible x 5 || divisible x 3) [1..999]
   where
@@ -251,49 +304,3 @@ e67 fileText = head $foldr (\x acc -> zipWith (+) x (maxNeighbor' acc)) (last tr
 
     fileToTree :: String -> [[Integer]]
     fileToTree x = map (map read) $ map words $ map init (lines x)
-
-main :: IO ()
-main = do
-  triangle <- readFile "triangle.txt"
-
-  args <- getArgs
-
-  let fastSols = [("e01", e1, 233168),
-                  ("e02", e2, 4613732),
-                  ("e03", e3, 6857),
-                  ("e04", e4, 906609),
-                  ("e06", e6, 25164150),
-                  ("e08", e8, 40824),
-                  ("e09", e9, 31875000),
-                  ("e10", e10, 142913828922),
-                  ("e13", e13, 5537376230),
-                  ("e18", e18, 1074),
-                  ("e67", e67 triangle, 7273)]
-
-      slowSols = [("e05", e5, 232792560),
-                  ("e07", e7, 104743)]
-
-      allSols = sortWith (\(x,_,_) -> x) (fastSols ++ slowSols)
-
-      sols
-        | (elem "--fast" args) || (elem "-f" args) = fastSols
-        | (elem "--slow" args) || (elem "-s" args) = slowSols
-        | otherwise                                = allSols
-
-  let profile :: (Integral a) => (String, a, a) -> IO Bool
-      profile (name, fcn, trueAnswer) = do
-        putStr $ "evaluating " ++ name ++ "... "
-        hFlush stdout
-        start    <- getCurrentTime
-        putStr $ if (fcn == trueAnswer) then "correct! " else "fail >:( "
-        end      <- getCurrentTime
-        putStrLn $ "eval time: " ++ show (diffUTCTime end start)
-        return (fcn == trueAnswer)
-
-  start   <- getCurrentTime
-  results <- mapM profile sols
-  end     <- getCurrentTime
-  if elem False results
-    then putStrLn $ "\n" ++ (show (length (filter (== False) results))) ++ " incorrect answers"
-    else putStrLn "\nno errors"
-  putStrLn $ "total eval time: " ++ show (diffUTCTime end start)
