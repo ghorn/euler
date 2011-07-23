@@ -4,6 +4,7 @@ module Main where
 
 import Data.List --(elemIndex)
 import Data.Maybe (isNothing, fromJust)
+import qualified Data.Map
 import GHC.Exts (sortWith)
 import Data.Time.Clock (getCurrentTime,diffUTCTime)
 import System.IO (hFlush,stdout)
@@ -22,6 +23,7 @@ main = do
                   ("e02", e2, 4613732),
                   ("e03", e3, 6857),
                   ("e04", e4, 906609),
+                  ("e05", e5, 232792560),
                   ("e06", e6, 25164150),
                   ("e08", e8, 40824),
                   ("e09", e9, 31875000),
@@ -30,8 +32,7 @@ main = do
                   ("e18", e18, 1074),
                   ("e67", e67 triangle, 7273)]
 
-      slowSols = [("e05", e5, 232792560),
-                  ("e07", e7, 104743)]
+      slowSols = [("e07", e7, 104743)]
 
       allSols = sortWith (\(x,_,_) -> x) (fastSols ++ slowSols)
 
@@ -92,11 +93,22 @@ e4 :: Integer
 e4 = maximum [a*b | a <- [100..999], b <- [100..a], show (a*b) == reverse (show (a*b))]
 
 
--- a faster analytic solution would be to multiply all the greatest power of the prime factorization
+-- smallest number that is evenly divisible by each of [1..20]
 e5 :: Integer
-e5 = head $ filter alldiv [1..]
+e5 = foldl mult 1 greatestPrimeFactors
   where
-    alldiv n = all (\x -> mod n x == 0) [20,19..2]
+    mult acc (factor, order) = product $ acc:(replicate order factor)
+
+    greatestPrimeFactors = Data.Map.toList $ foldl f Data.Map.empty (concat primeFactorizations)
+      where
+        f acc x = Data.Map.unionWith max acc (Data.Map.fromList [x])
+
+    primeFactorizations = map ((flip factorize) []) [2..20]
+      where
+        factorize 1 knownFactors = map (\x -> (head x, length x)) $ group knownFactors
+        factorize n knownFactors = factorize (n `div` firstDivisor) (firstDivisor:knownFactors)
+          where
+            firstDivisor = head $ filter (\x -> mod n x == 0) [2..n]
 
 
 -- difference between sum of squares and square of sum of [1..100]
