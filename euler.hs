@@ -25,6 +25,7 @@ main = do
                   ("e04", e4, 906609),
                   ("e05", e5, 232792560),
                   ("e06", e6, 25164150),
+                  ("e07'", e7', 104743),
                   ("e08", e8, 40824),
                   ("e09", e9, 31875000),
                   ("e10", e10, 142913828922),
@@ -43,7 +44,7 @@ main = do
 
   let profile :: (Integral a) => (String, a, a) -> IO Bool
       profile (name, fcn, trueAnswer) = do
-        putStr $ "evaluating " ++ name ++ "... "
+        putStr $ "evaluating " ++ name ++ "......\t"
         hFlush stdout
         start    <- getCurrentTime
         putStr $ if (fcn == trueAnswer) then "correct! " else "fail >:( "
@@ -118,6 +119,7 @@ e6 = (sqrSum 100) - (sumSqr 100)
     sumSqr n = sum $ map (\x -> x*x) [1..n]
     sqrSum n = (\x -> x*x) $ sum [1..n]
 
+
 -- the 10,001st prime number
 e7 :: Integer
 e7 = fromIntegral $ head $ nPrimes 10001
@@ -133,6 +135,16 @@ e7 = fromIntegral $ head $ nPrimes 10001
       | otherwise   = primeSieve n sieved xs
       where
         isPrime x' = and $ map (\a -> mod x' a /= 0) sieved
+
+
+-- better version from from "The Genuine Sieve of Eratosthenes" by Melissa E. O'Neill
+e7' :: Integer
+e7' = nthPrime 10001
+  where
+    nthPrime n = primes !! (n - 1)
+    primes = ( 2 : [ x | x <- [3..], isPrime x])
+    isPrime x = all (\p -> x `mod` p > 0 ) (factorsToTry x)
+    factorsToTry x = takeWhile (\p -> p*p <= x) primes
 
 
 -- greatest product of 5 consecutive digits in a 1000-digit number
