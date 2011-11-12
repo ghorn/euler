@@ -7,8 +7,8 @@ import Data.Maybe (isNothing, fromJust)
 import qualified Data.Map
 import GHC.Exts (sortWith)
 import Data.Time.Clock (getCurrentTime,diffUTCTime)
-import System.IO (hFlush,stdout)
-import System (getArgs)
+import System.IO(hFlush,stdout)
+import System.Environment(getArgs)
 
 
 -- the IO is here, the problems are all below
