@@ -18,3 +18,4 @@ executable euler
   main-is:           Main.hs
   -- other-modules:       
   build-depends:     base, time, containers
+  Ghc-options:       -O2

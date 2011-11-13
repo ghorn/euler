@@ -20,6 +20,7 @@ import Euler.E8(e8)
 import Euler.E9(e9)
 import Euler.E10(e10)
 import Euler.E13(e13)
+import Euler.E14(e14, e14')
 import Euler.E18(e18)
 import Euler.E67(e67)
 
@@ -42,10 +43,12 @@ main = do
                   ("e09", e9, 31875000),
                   ("e10", e10, 142913828922),
                   ("e13", e13, 5537376230),
+                  ("e14'", e14', 837799),
                   ("e18", e18, 1074),
                   ("e67", e67 triangle, 7273)]
 
-      slowSols = [("e07", e7, 104743)]
+      slowSols = [("e07", e7, 104743),
+                  ("e14", e14, 837799)]
 
       allSols = sortWith (\(x,_,_) -> x) (fastSols ++ slowSols)
 
