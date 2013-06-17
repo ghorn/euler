@@ -2,10 +2,10 @@
 
 {-# OPTIONS_GHC -Wall #-}
 
-module Euler.E2(e2) where
+module Euler.E002 ( e002 ) where
 
-e2 :: Integer
-e2 = sum $ filter even (fibsUnder 4000000 [])
+e002 :: Integer
+e002 = sum $ filter even (fibsUnder 4000000 [])
   where
     fibsUnder :: Integer -> [Integer] -> [Integer]
     fibsUnder n []  = fibsUnder n [1]

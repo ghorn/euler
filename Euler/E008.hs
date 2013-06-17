@@ -2,11 +2,11 @@
 
 {-# OPTIONS_GHC -Wall #-}
 
-module Euler.E8(e8) where
+module Euler.E008 ( e008 ) where
 
 -- greatest product of 5 consecutive digits in a 1000-digit number
-e8 :: Integer
-e8 = maximum $ products5 $ digits num
+e008 :: Integer
+e008 = maximum $ products5 $ digits num
   where
     digits :: Integer -> [Integer]
     digits 0 = []

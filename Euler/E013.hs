@@ -2,11 +2,11 @@
 
 {-# OPTIONS_GHC -Wall #-}
 
-module Euler.E13(e13) where
+module Euler.E013 ( e013 ) where
 
 -- first 10 digits of sum of 100 50-digit numbers
-e13 :: Integer
-e13 = read $ take 10 $ show (sum nums)
+e013 :: Integer
+e013 = read $ take 10 $ show (sum nums)
   where
     nums :: [Integer]
     nums = [37107287533902102798797998220837590246510135740250,

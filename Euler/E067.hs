@@ -2,11 +2,11 @@
 
 {-# OPTIONS_GHC -Wall #-}
 
-module Euler.E67(e67) where
+module Euler.E067 ( e067 ) where
 
 -- greatest sum along large binary tree
-e67 :: String -> Integer
-e67 fileText = head $foldr (\x acc -> zipWith (+) x (maxNeighbor' acc)) (last tree) (init tree)
+e067 :: String -> Integer
+e067 fileText = head $foldr (\x acc -> zipWith (+) x (maxNeighbor' acc)) (last tree) (init tree)
   where
     tree = fileToTree fileText
 

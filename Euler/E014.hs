@@ -2,7 +2,7 @@
 
 {-# OPTIONS_GHC -Wall #-}
 
-module Euler.E14(e14, e14') where
+module Euler.E014( e014, e014' ) where
 
 import Data.IntMap(IntMap, member, insert, singleton, (!), assocs)
 import Data.Foldable(foldr')
@@ -26,8 +26,8 @@ insertLen n lmap0
     lmap1 = insertLen nextN lmap0
 
 -- slow because of garbage collection
-e14 :: Integer
-e14 = fromIntegral $ fst $ foldr' max' (0,0) (assocs lmap)
+e014 :: Integer
+e014 = fromIntegral $ fst $ foldr' max' (0,0) (assocs lmap)
   where
     lmap = buildLenMap 1000000
     max' (k, v) (kOld, vOld)
@@ -35,8 +35,8 @@ e14 = fromIntegral $ fst $ foldr' max' (0,0) (assocs lmap)
       | otherwise = (kOld, vOld)
 
 -- much faster but sad because it's brute force
-e14' :: Integer
-e14' = fromIntegral $ fst $ foldr' f (0,0) [1..1000000]
+e014' :: Integer
+e014' = fromIntegral $ fst $ foldr' f (0,0) [1..1000000]
   where
     f k (kOld, vOld)
       | v > vOld  = (k, v)

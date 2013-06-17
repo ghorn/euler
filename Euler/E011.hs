@@ -2,7 +2,7 @@
 
 {-# OPTIONS_GHC -Wall #-}
 
-module Euler.E11(e11) where
+module Euler.E011 ( e011 ) where
 
 import Data.Vector.Unboxed(Vector, fromList, (!))
 
@@ -33,8 +33,8 @@ colF, rowF :: Int
 colF = 19
 rowF = 19
 
-e11 :: Integer
-e11 = toInteger $ maximum $ map product $ map (map get) allCombinations
+e011 :: Integer
+e011 = toInteger $ maximum $ map product $ map (map get) allCombinations
 
 rcToIdx :: (Int,Int) -> Int
 rcToIdx (row,col) 

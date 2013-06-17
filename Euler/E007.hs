@@ -2,11 +2,11 @@
 
 {-# OPTIONS_GHC -Wall #-}
 
-module Euler.E7(e7, e7') where
+module Euler.E007 ( e007, e007' ) where
 
 -- the 10,001st prime number
-e7 :: Integer
-e7 = fromIntegral $ head $ nPrimes 10001
+e007 :: Integer
+e007 = fromIntegral $ head $ nPrimes 10001
   where
     nPrimes :: Int -> [Int]
     nPrimes n = primeSieve n [] [2..]
@@ -21,8 +21,8 @@ e7 = fromIntegral $ head $ nPrimes 10001
         isPrime x' = and $ map (\a -> mod x' a /= 0) sieved
 
 -- better version from from "The Genuine Sieve of Eratosthenes" by Melissa E. O'Neill
-e7' :: Integer
-e7' = nthPrime 10001
+e007' :: Integer
+e007' = nthPrime 10001
   where
     nthPrime n = primes !! (n - 1)
     primes = ( 2 : [ x | x <- [3..], isPrime x])

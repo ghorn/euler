@@ -2,11 +2,11 @@
 
 {-# OPTIONS_GHC -Wall #-}
 
-module Euler.E34(e34) where
+module Euler.E034 ( e034 ) where
 
 -- (non-working brute force solution) sum of all numbers whose sum of factorial of digits == number
-e34 :: Integer
-e34 = sum $ filter good [1..10000]
+e034 :: Integer
+e034 = sum $ filter good [1..10000]
   where
     splitIntegral :: (Integral a, Read a) => a -> [a]
     splitIntegral a = map (\x -> read x) $ map (\x -> [x]) (show a)

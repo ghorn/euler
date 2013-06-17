@@ -2,11 +2,11 @@
 
 {-# OPTIONS_GHC -Wall #-}
 
-module Euler.E18(e18) where
+module Euler.E018 ( e018 ) where
 
 -- greatest sum along small binary tree
-e18 :: Integer
-e18 = head $foldr (\x acc -> zipWith (+) x (maxNeighbor' acc)) (last tree) (init tree)
+e018 :: Integer
+e018 = head $foldr (\x acc -> zipWith (+) x (maxNeighbor' acc)) (last tree) (init tree)
 --e18 = head $foldr (\x acc -> zipWith (+) x (maxNeighbor [] acc)) (last tree) (init tree)
   where
     tree = [[75],

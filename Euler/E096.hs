@@ -1,6 +1,6 @@
 {-# OPTIONS_GHC -Wall #-}
 
-module Euler.E96 ( main, isSolved, sumIs45Filter, blah ) where
+module Euler.E096 ( main, isSolved, sumIs45Filter, blah ) where
 
 import Control.Monad ( foldM )
 import Data.IntSet ( IntSet, (\\) )

@@ -2,10 +2,10 @@
 
 {-# OPTIONS_GHC -Wall #-}
 
-module Euler.E3(e3) where
+module Euler.E003 ( e003 ) where
 
-e3 :: Integer
-e3 = head $ factorize 600851475143 []
+e003 :: Integer
+e003 = head $ factorize 600851475143 []
   where
     factorize :: Integer -> [Integer] -> [Integer]
     factorize 1 knownFactors = knownFactors

@@ -2,14 +2,14 @@
 
 {-# OPTIONS_GHC -Wall #-}
 
-module Euler.E79(e79) where
+module Euler.E079 ( e079 ) where
 
 import Data.List(elemIndex)
 import Data.Maybe(isNothing, fromJust)
 
 -- break list of ordered triples (login attempts)
-e79 :: Integer
-e79 = head $ filter validPassword [1..]
+e079 :: Integer
+e079 = head $ filter validPassword [1..]
   where
     keylog :: (Integral a) => [a]
     keylog = [319,680,180,690,129,620,762,689,762,318,

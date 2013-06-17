@@ -2,11 +2,11 @@
 
 {-# OPTIONS_GHC -Wall #-}
 
-module Euler.E10(e10) where
+module Euler.E010 ( e010 ) where
 
 -- sum of primes under 2,000,000
-e10 :: Integer
-e10 = fromIntegral $ sum $ primesUnder 2000000
+e010 :: Integer
+e010 = fromIntegral $ sum $ primesUnder 2000000
 primesUnder :: Int -> [Int]
 primesUnder n = primeSieve [] [2..n-1]
   where

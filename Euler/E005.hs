@@ -2,14 +2,14 @@
 
 {-# OPTIONS_GHC -Wall #-}
 
-module Euler.E5(e5) where
+module Euler.E005 ( e005 ) where
 
 import Data.List(group)
 import qualified Data.Map
 
 -- smallest number that is evenly divisible by each of [1..20]
-e5 :: Integer
-e5 = foldl mult 1 greatestPrimeFactors
+e005 :: Integer
+e005 = foldl mult 1 greatestPrimeFactors
   where
     mult acc (factor, order) = product $ acc:(replicate order factor)
 
