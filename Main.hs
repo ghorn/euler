@@ -25,6 +25,7 @@ import Euler.E014 ( e014, e014' )
 import Euler.E015 ( e015 )
 import Euler.E016 ( e016 )
 import Euler.E018 ( e018 )
+import Euler.E020 ( e020 )
 import Euler.E067 ( e067 )
 
 -- run all the problems
@@ -51,6 +52,7 @@ main = do
                  , ("e015", e015, 137846528820)
                  , ("e016", e016, 1366)
                  , ("e018",  e018, 1074)
+                 , ("e020", e020, 648)
                  , ("e067",  e067 triangle, 7273)
                  ]
 
