@@ -22,6 +22,8 @@ import Euler.E010 ( e010 )
 import Euler.E011 ( e011 )
 import Euler.E013 ( e013 )
 import Euler.E014 ( e014, e014' )
+import Euler.E015 ( e015 )
+import Euler.E016 ( e016 )
 import Euler.E018 ( e018 )
 import Euler.E067 ( e067 )
 
@@ -46,6 +48,8 @@ main = do
                  , ("e011",  e011, 70600674)
                  , ("e013",  e013, 5537376230)
                  , ("e014'", e014', 837799)
+                 , ("e015", e015, 137846528820)
+                 , ("e016", e016, 1366)
                  , ("e018",  e018, 1074)
                  , ("e067",  e067 triangle, 7273)
                  ]
